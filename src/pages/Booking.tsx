@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { bookSeatAsync } from "../redux/slices/seatSlice";
+import { bookSeat } from "../redux/slices/seatSlice";
 
 interface LocationState {
   busNo: string;
@@ -25,18 +25,16 @@ const Booking = () => {
       return;
     }
 
-    dispatch(
-      bookSeatAsync({
-        busNo: seat.busNo,
-        seatNo: seat.seatNo,
-        bookedBy: name,
-        destination,
-        time,
-      })
-    ).then(() => {
-      alert(`Seat ${seat.seatNo} on ${seat.busNo} booked successfully!`);
-      navigate("/");
-    });
+    dispatch(bookSeat({
+      busNo: seat.busNo,
+      seatNo: seat.seatNo,
+      bookedBy: name,
+      destination,
+      time,
+    }));
+    
+    alert(`Seat ${seat.seatNo} on ${seat.busNo} booked successfully!`);
+    navigate("/");
   };
 
   if (!seat || !seat.busNo || !seat.seatNo) {
